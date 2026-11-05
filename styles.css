@@ -1107,6 +1107,46 @@ textarea.form-input:focus {
 /* ==========================================================================
    NESTED CONTAINERS & SPOTLIGHT CURSOR ILLUMINATION
    ========================================================================== */
+.icon-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+.icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.craft-card:hover .icon-box {
+  background: var(--gold);
+  color: #09090d;
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px var(--gold-glow);
+  transform: scale(1.05);
+}
+
+.status-dot-emerald {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 50%;
+  background-color: var(--emerald);
+  box-shadow: 0 0 8px var(--emerald);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
 .nested-box {
   background: var(--bg-subtle);
   border: 1px solid var(--border-subtle);

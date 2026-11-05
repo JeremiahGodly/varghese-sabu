@@ -321,8 +321,9 @@ const LawSearchEngine = {
           </div>
 
           <div class="pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px]">
-            <span class="truncate max-w-[170px] text-dim font-mono">
-              🏛️ ${item.triableBy.replace('Court of Session', 'Sessions').replace('Magistrate of First Class', 'JMFC')}
+            <span class="truncate max-w-[170px] text-dim font-mono flex items-center gap-1">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 3 2 10h20Z"/></svg>
+              <span>${item.triableBy.replace('Court of Session', 'Sessions').replace('Magistrate of First Class', 'JMFC')}</span>
             </span>
             <span class="text-gold font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
               Detailed View &rarr;
@@ -376,8 +377,9 @@ const LawSearchEngine = {
         <!-- Landmark Precedents -->
         <div class="space-y-1.5">
           <h4 class="text-xs font-semibold text-muted uppercase tracking-wider font-mono">Supreme Court / High Court Citations</h4>
-          <div class="p-3.5 rounded-xl nested-box border border-amber-500/30 font-mono text-xs text-gold leading-relaxed shadow-sm">
-            ⚖️ ${item.keyPrecedents}
+          <div class="p-3.5 rounded-xl nested-box border border-amber-500/30 font-mono text-xs text-gold leading-relaxed shadow-sm flex items-start gap-2">
+            <svg class="w-4 h-4 text-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            <span>${item.keyPrecedents}</span>
           </div>
         </div>
 
@@ -446,8 +448,9 @@ function showJudgmentDetail(index) {
 
       <div class="space-y-1">
         <span class="text-[11px] font-mono text-muted uppercase tracking-wider">Procedural Relief & Result</span>
-        <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-bold text-emerald-600 dark:text-emerald-400">
-          🏆 ${item.result}
+        <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+          <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m8 21 8 0"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 6h3a2 2 0 0 1 2 2 5 5 0 0 1-5 5"/><path d="M7 6H4a2 2 0 0 0-2 2 5 5 0 0 0 5 5"/></svg>
+          <span>${item.result}</span>
         </div>
       </div>
 
