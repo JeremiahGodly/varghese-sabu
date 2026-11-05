@@ -37,12 +37,7 @@ const ThemeController = {
 
   init() {
     const saved = localStorage.getItem('adv_theme');
-    if (saved) {
-      this.currentTheme = saved;
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.currentTheme = prefersDark ? 'dark' : 'light';
-    }
+    this.currentTheme = saved || 'dark';
     this.apply();
   },
 
@@ -303,7 +298,7 @@ const LawSearchEngine = {
       const bailBadge = isBailable ? 'badge-emerald' : 'badge-crimson';
 
       return `
-        <div class="glass-panel glass-interactive p-4 flex flex-col justify-between group transition-all" onclick="LawSearchEngine.showDetail('${item.id}')">
+        <div class="craft-card spotlight-card" onclick="LawSearchEngine.showDetail('${item.id}')">
           <div>
             <div class="flex items-center justify-between gap-2 mb-2">
               <span class="badge-pill badge-gold">${item.section}</span>
@@ -734,9 +729,73 @@ const AmbientFluidCanvas = {
   }
 };
 
+// PATTERNCRAFT PATTERN SWITCHER
+const PatternSwitcher = {
+  currentPattern: 'dots',
+  patterns: ['dots', 'blueprint', 'glow', 'mesh'],
+
+  init() {
+    const saved = localStorage.getItem('adv_pattern') || 'dots';
+    this.setPattern(saved, false);
+
+    document.querySelectorAll('[data-pattern-btn]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pattern = btn.getAttribute('data-pattern-btn');
+        this.setPattern(pattern, true);
+      });
+    });
+  },
+
+  setPattern(pattern, notify = true) {
+    this.currentPattern = pattern;
+    localStorage.setItem('adv_pattern', pattern);
+
+    const layer = document.getElementById('patternLayer');
+    const fluidCanvas = document.getElementById('ambientFluidCanvas');
+
+    if (layer) {
+      layer.className = 'pattern-layer';
+      if (pattern === 'dots') layer.classList.add('pattern-dots');
+      else if (pattern === 'blueprint') layer.classList.add('pattern-blueprint');
+      else if (pattern === 'glow') layer.classList.add('pattern-glow');
+      else if (pattern === 'mesh') layer.classList.add('pattern-dots');
+    }
+
+    if (fluidCanvas) {
+      if (pattern === 'mesh') {
+        fluidCanvas.style.opacity = '1';
+      } else if (pattern === 'glow') {
+        fluidCanvas.style.opacity = '0.5';
+      } else {
+        fluidCanvas.style.opacity = '0.35';
+      }
+    }
+
+    document.querySelectorAll('[data-pattern-btn]').forEach(btn => {
+      if (btn.getAttribute('data-pattern-btn') === pattern) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (notify) {
+      AudioFX.playClick(720, 0.04);
+      const names = {
+        'dots': 'Dot Matrix Grid',
+        'blueprint': 'Architectural Blueprint',
+        'glow': 'Radial Glow Vignette',
+        'mesh': 'Fluid Ambient Waves'
+      };
+      showToast(`Active Background Pattern: ${names[pattern] || pattern}`);
+    }
+  }
+};
+
 // INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   ThemeController.init();
+  PatternSwitcher.init();
   AmbientFluidCanvas.init();
   LawSearchEngine.init();
   FeeCalculator.calculate();
