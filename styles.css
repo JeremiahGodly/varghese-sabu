@@ -96,6 +96,15 @@
   box-sizing: border-box;
 }
 
+button {
+  font-family: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
 html {
   scroll-behavior: smooth;
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -820,7 +829,7 @@ body {
   margin-bottom: 18px;
 }
 
-.filter-tab-btn {
+.filter-tab-btn, .category-pill {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
@@ -830,14 +839,19 @@ body {
   border-radius: 9999px;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.4;
 }
 
-.filter-tab-btn:hover {
+.filter-tab-btn:hover, .category-pill:hover {
   color: var(--text-title);
   background: var(--bg-subtle-hover);
+  border-color: var(--border-hover);
 }
 
-.filter-tab-btn.active {
+.filter-tab-btn.active, .category-pill.active {
   background: var(--gold-soft);
   color: var(--gold);
   border-color: var(--border-gold);

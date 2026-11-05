@@ -230,14 +230,14 @@ const LawSearchEngine = {
 
     container.innerHTML = categories.map(cat => `
       <button 
-        class="category-pill text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all ${cat === this.currentCategory ? 'bg-amber-500/20 text-amber-500 border-amber-500/40 shadow-sm font-semibold' : 'bg-transparent text-muted border-subtle hover:text-title'}"
+        class="filter-tab-btn ${cat === this.currentCategory ? 'active' : ''}"
         data-cat="${cat}"
       >
         ${cat}
       </button>
     `).join('');
 
-    container.querySelectorAll('.category-pill').forEach(btn => {
+    container.querySelectorAll('.filter-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         AudioFX.playClick(650, 0.03);
         this.currentCategory = btn.getAttribute('data-cat');
@@ -823,10 +823,8 @@ document.addEventListener('DOMContentLoaded', () => {
   checklistTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       AudioFX.playClick(600, 0.03);
-      checklistTabs.forEach(t => {
-        t.className = 'text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all bg-transparent text-muted border-subtle hover:text-title';
-      });
-      tab.className = 'text-xs px-3.5 py-1.5 rounded-full border font-semibold transition-all bg-amber-500/20 text-amber-500 border-amber-500/40 shadow-sm';
+      checklistTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
       DocumentChecklists.render(tab.getAttribute('data-checklist-tab'));
     });
   });
