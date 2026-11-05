@@ -165,7 +165,7 @@ const DrawerController = {
     titleEl.textContent = title;
     subtitleEl.textContent = subtitle;
     badgeEl.textContent = badgeText;
-    badgeEl.className = `micro-badge ${badgeClass}`;
+    badgeEl.className = `badge-pill ${badgeClass}`;
     bodyEl.innerHTML = contentHtml;
 
     backdrop.classList.add('active');
@@ -235,7 +235,7 @@ const LawSearchEngine = {
 
     container.innerHTML = categories.map(cat => `
       <button 
-        class="category-pill text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all ${cat === this.currentCategory ? 'bg-amber-500/20 text-amber-500 border-amber-500/40 shadow-sm font-semibold' : 'bg-transparent text-muted-custom border-subtle hover:text-title'}"
+        class="category-pill text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all ${cat === this.currentCategory ? 'bg-amber-500/20 text-amber-500 border-amber-500/40 shadow-sm font-semibold' : 'bg-transparent text-muted border-subtle hover:text-title'}"
         data-cat="${cat}"
       >
         ${cat}
@@ -284,12 +284,12 @@ const LawSearchEngine = {
 
     if (filtered.length === 0) {
       grid.innerHTML = `
-        <div class="col-span-full py-12 text-center soft-glass-panel p-8">
+        <div class="col-span-full py-12 text-center glass-panel p-8">
           <div class="inline-flex p-3.5 rounded-2xl bg-amber-500/10 text-amber-500 mb-3">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
           <p class="text-sm font-bold text-title">No matching statutory sections found for "${this.query}"</p>
-          <p class="text-xs text-muted-custom mt-1">Try keywords like: <span class="text-gold font-semibold">bail, murder, ship arrest, 482, quashing, arbitration, cheque bounce</span></p>
+          <p class="text-xs text-muted mt-1">Try keywords like: <span class="text-gold font-semibold">bail, murder, ship arrest, 482, quashing, arbitration, cheque bounce</span></p>
           <button onclick="LawSearchEngine.simulateLiveApiQuery('${this.query}')" class="mt-4 btn-glass text-xs">
             Query External Indian Law Repository API
           </button>
@@ -303,30 +303,30 @@ const LawSearchEngine = {
       const bailBadge = isBailable ? 'badge-emerald' : 'badge-crimson';
 
       return `
-        <div class="soft-glass-panel soft-glass-interactive spotlight-card p-4 flex flex-col justify-between group transition-all" onclick="LawSearchEngine.showDetail('${item.id}')">
+        <div class="glass-panel glass-interactive p-4 flex flex-col justify-between group transition-all" onclick="LawSearchEngine.showDetail('${item.id}')">
           <div>
             <div class="flex items-center justify-between gap-2 mb-2">
-              <span class="micro-badge badge-gold">${item.section}</span>
-              <span class="micro-badge ${bailBadge}">${item.bailable}</span>
+              <span class="badge-pill badge-gold">${item.section}</span>
+              <span class="badge-pill ${bailBadge}">${item.bailable}</span>
             </div>
 
             <div class="text-[11px] font-mono text-gold mb-1 flex items-center gap-1.5">
               <span>${item.act.split(',')[0]}</span>
-              <span class="text-dim-custom">•</span>
-              <span class="font-semibold text-muted-custom">${item.legacyEquiv}</span>
+              <span class="text-dim">•</span>
+              <span class="font-semibold text-muted">${item.legacyEquiv}</span>
             </div>
 
             <h4 class="text-sm font-bold text-title group-hover:text-gold transition-colors line-clamp-1 mb-1.5">
               ${item.title}
             </h4>
 
-            <p class="text-xs text-muted-custom line-clamp-2 leading-relaxed mb-3">
+            <p class="text-xs text-muted line-clamp-2 leading-relaxed mb-3">
               ${item.summary}
             </p>
           </div>
 
           <div class="pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px]">
-            <span class="truncate max-w-[170px] text-dim-custom font-mono">
+            <span class="truncate max-w-[170px] text-dim font-mono">
               🏛️ ${item.triableBy.replace('Court of Session', 'Sessions').replace('Magistrate of First Class', 'JMFC')}
             </span>
             <span class="text-gold font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
@@ -347,12 +347,12 @@ const LawSearchEngine = {
     const html = `
       <div class="space-y-4">
         <!-- Statutory Header Card -->
-        <div class="p-4 rounded-2xl bg-[var(--bg-card-nested)] border border-[var(--border-subtle)]">
+        <div class="p-4 rounded-2xl nested-box border border-[var(--border-subtle)]">
           <div class="flex flex-wrap items-center gap-2 mb-2">
-            <span class="micro-badge badge-gold">${item.section}</span>
-            <span class="micro-badge badge-neutral">${item.category}</span>
-            <span class="micro-badge ${item.bailable.includes('Non') ? 'badge-crimson' : 'badge-emerald'}">${item.bailable}</span>
-            <span class="micro-badge badge-azure">${item.cognizable}</span>
+            <span class="badge-pill badge-gold">${item.section}</span>
+            <span class="badge-pill badge-neutral">${item.category}</span>
+            <span class="badge-pill ${item.bailable.includes('Non') ? 'badge-crimson' : 'badge-emerald'}">${item.bailable}</span>
+            <span class="badge-pill badge-azure">${item.cognizable}</span>
           </div>
           <h3 class="text-base font-bold text-title mb-1">${item.title}</h3>
           <p class="text-xs text-gold font-mono font-medium">${item.act} &nbsp;|&nbsp; Equiv: ${item.legacyEquiv}</p>
@@ -360,28 +360,28 @@ const LawSearchEngine = {
 
         <!-- Statutory Substance -->
         <div class="space-y-1.5">
-          <h4 class="text-xs font-semibold text-muted-custom uppercase tracking-wider font-mono">Statutory Provision Summary</h4>
-          <p class="text-xs text-body leading-relaxed p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-sm">
+          <h4 class="text-xs font-semibold text-muted uppercase tracking-wider font-mono">Statutory Provision Summary</h4>
+          <p class="text-xs text-body leading-relaxed p-3.5 rounded-xl nested-box border border-[var(--border-subtle)] shadow-sm">
             ${item.summary}
           </p>
         </div>
 
         <!-- Procedural Parameters Grid -->
         <div class="grid grid-cols-2 gap-3 text-xs">
-          <div class="p-3 rounded-xl bg-[var(--bg-card-nested)] border border-[var(--border-subtle)]">
-            <span class="text-[10px] uppercase font-mono text-dim-custom block mb-1">Prescribed Punishment</span>
+          <div class="p-3 rounded-xl nested-box border border-[var(--border-subtle)]">
+            <span class="text-[10px] uppercase font-mono text-dim block mb-1">Prescribed Punishment</span>
             <span class="font-semibold text-title">${item.punishment}</span>
           </div>
-          <div class="p-3 rounded-xl bg-[var(--bg-card-nested)] border border-[var(--border-subtle)]">
-            <span class="text-[10px] uppercase font-mono text-dim-custom block mb-1">Forum of Trial</span>
+          <div class="p-3 rounded-xl nested-box border border-[var(--border-subtle)]">
+            <span class="text-[10px] uppercase font-mono text-dim block mb-1">Forum of Trial</span>
             <span class="font-semibold text-title">${item.triableBy}</span>
           </div>
         </div>
 
         <!-- Landmark Precedents -->
         <div class="space-y-1.5">
-          <h4 class="text-xs font-semibold text-muted-custom uppercase tracking-wider font-mono">Supreme Court / High Court Citations</h4>
-          <div class="p-3.5 rounded-xl bg-[var(--bg-surface)] border border-amber-500/30 font-mono text-xs text-gold leading-relaxed shadow-sm">
+          <h4 class="text-xs font-semibold text-muted uppercase tracking-wider font-mono">Supreme Court / High Court Citations</h4>
+          <div class="p-3.5 rounded-xl nested-box border border-amber-500/30 font-mono text-xs text-gold leading-relaxed shadow-sm">
             ⚖️ ${item.keyPrecedents}
           </div>
         </div>
@@ -433,38 +433,38 @@ function showJudgmentDetail(index) {
 
   const html = `
     <div class="space-y-4">
-      <div class="p-4 rounded-2xl bg-[var(--bg-card-nested)] border border-[var(--border-subtle)]">
+      <div class="p-4 rounded-2xl nested-box border border-[var(--border-subtle)]">
         <div class="flex items-center justify-between gap-2 mb-2">
-          <span class="micro-badge badge-gold">${item.caseNo}</span>
-          <span class="micro-badge badge-emerald font-mono">${item.citation}</span>
+          <span class="badge-pill badge-gold">${item.caseNo}</span>
+          <span class="badge-pill badge-emerald font-mono">${item.citation}</span>
         </div>
         <h3 class="text-base font-bold text-title mb-1">${item.title}</h3>
         <p class="text-xs text-gold font-mono">${item.court} &bull; ${item.date}</p>
       </div>
 
       <div class="space-y-1">
-        <span class="text-[11px] font-mono text-muted-custom uppercase tracking-wider">Subject Matter</span>
-        <p class="text-xs font-semibold text-title p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-sm">
+        <span class="text-[11px] font-mono text-muted uppercase tracking-wider">Subject Matter</span>
+        <p class="text-xs font-semibold text-title p-3 rounded-xl nested-box border border-[var(--border-subtle)] shadow-sm">
           ${item.subject}
         </p>
       </div>
 
       <div class="space-y-1">
-        <span class="text-[11px] font-mono text-muted-custom uppercase tracking-wider">Procedural Relief & Result</span>
+        <span class="text-[11px] font-mono text-muted uppercase tracking-wider">Procedural Relief & Result</span>
         <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-bold text-emerald-600 dark:text-emerald-400">
           🏆 ${item.result}
         </div>
       </div>
 
       <div class="space-y-1">
-        <span class="text-[11px] font-mono text-muted-custom uppercase tracking-wider">Case Narrative & Precedent Impact</span>
-        <p class="text-xs text-body leading-relaxed p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-sm">
+        <span class="text-[11px] font-mono text-muted uppercase tracking-wider">Case Narrative & Precedent Impact</span>
+        <p class="text-xs text-body leading-relaxed p-3.5 rounded-xl nested-box border border-[var(--border-subtle)] shadow-sm">
           ${item.summary}
         </p>
       </div>
 
       <div class="flex flex-wrap gap-1.5 pt-2">
-        ${item.tags.map(t => `<span class="micro-badge badge-neutral">${t}</span>`).join('')}
+        ${item.tags.map(t => `<span class="badge-pill badge-neutral">${t}</span>`).join('')}
       </div>
 
       <div class="pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between gap-3">
@@ -562,7 +562,7 @@ const DocumentChecklists = {
 
     const items = this.lists[type] || this.lists['bail'];
     container.innerHTML = items.map(item => `
-      <label class="flex items-start gap-3 p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-amber-500/50 cursor-pointer transition-all shadow-sm text-xs text-body">
+      <label class="flex items-start gap-3 p-3 rounded-xl nested-box border border-[var(--border-subtle)] hover:border-amber-500/50 cursor-pointer transition-all shadow-sm text-xs text-body">
         <input type="checkbox" class="mt-0.5 rounded border-slate-400 text-amber-500 focus:ring-amber-400" />
         <span>${item.name}</span>
       </label>
@@ -762,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       AudioFX.playClick(600, 0.03);
       checklistTabs.forEach(t => {
-        t.className = 'text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all bg-transparent text-muted-custom border-subtle hover:text-title';
+        t.className = 'text-xs px-3.5 py-1.5 rounded-full border font-medium transition-all bg-transparent text-muted border-subtle hover:text-title';
       });
       tab.className = 'text-xs px-3.5 py-1.5 rounded-full border font-semibold transition-all bg-amber-500/20 text-amber-500 border-amber-500/40 shadow-sm';
       DocumentChecklists.render(tab.getAttribute('data-checklist-tab'));
