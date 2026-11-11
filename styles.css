@@ -618,6 +618,38 @@ body {
     gap: 16px;
     padding-right: clamp(140px, 45vw, 320px) !important;
   }
+
+  #artifactsTrack {
+    gap: 16px !important;
+    padding-right: clamp(140px, 45vw, 320px) !important;
+  }
+
+  #artifactsTrack .swipe-card.artifact-symbol-card {
+    flex: 0 0 115px !important;
+    min-width: 105px !important;
+    max-width: 125px !important;
+    height: 145px !important;
+  }
+
+  .symbol-pedestal {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .symbol-pedestal::after {
+    inset: -5px !important;
+  }
+
+  .artifact-symbol-svg {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .symbol-halo {
+    width: 90px !important;
+    height: 90px !important;
+    filter: blur(18px) !important;
+  }
 }
 
 .pin-card-focused {
@@ -820,6 +852,216 @@ body {
   gap: 8px;
   padding-top: 8px;
   border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   CONTACT ARTIFACTS: PURE SYMBOL PEDESTALS (ZERO TEXT, ENHANCED EFFECTS)
+   ========================================================================== */
+#artifactsTrack {
+  gap: 28px !important;
+  align-items: center !important;
+  padding: 20px clamp(120px, 35vw, 360px) 24px 16px !important;
+}
+
+#artifactsTrack .swipe-card.artifact-symbol-card {
+  flex: 0 0 160px !important;
+  min-width: 150px !important;
+  max-width: 170px !important;
+  height: 180px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  position: relative;
+  contain: layout paint;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+  opacity: 0.82;
+}
+
+#artifactsTrack .swipe-card.artifact-symbol-card:hover,
+#artifactsTrack .swipe-card.artifact-symbol-card.pin-card-focused {
+  opacity: 1 !important;
+  transform: translateY(-8px) scale(1.15) !important;
+}
+
+/* Glassmorphic Floating Pedestal Disc */
+.symbol-pedestal {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14), rgba(20, 22, 28, 0.92));
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 
+    0 14px 34px -4px rgba(0, 0, 0, 0.85),
+    inset 0 2px 4px rgba(255, 255, 255, 0.22),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Orbiting Dashed Ring */
+.symbol-pedestal::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: ringRotate 20s linear infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes ringRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Ambient Radiant Glow Halo */
+.symbol-halo {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(24px);
+  opacity: 0.45;
+  pointer-events: none;
+  transition: all 0.35s ease;
+  z-index: 0;
+  transform: scale(0.9);
+}
+
+.artifact-symbol-card:hover .symbol-halo,
+.artifact-symbol-card.pin-card-focused .symbol-halo {
+  opacity: 0.95;
+  transform: scale(1.35);
+}
+
+.artifact-symbol-card:hover .symbol-pedestal,
+.artifact-symbol-card.pin-card-focused .symbol-pedestal {
+  border-color: var(--symbol-color, var(--gold));
+  box-shadow: 
+    0 16px 42px -4px var(--symbol-glow, var(--gold-glow)),
+    0 0 24px -2px var(--symbol-color, var(--gold)),
+    inset 0 2px 6px rgba(255, 255, 255, 0.35);
+}
+
+.artifact-symbol-card:hover .symbol-pedestal::after,
+.artifact-symbol-card.pin-card-focused .symbol-pedestal::after {
+  inset: -9px;
+  border-color: var(--symbol-color, var(--gold));
+  opacity: 0.9;
+}
+
+/* Enhanced SVG Symbol */
+.artifact-symbol-svg {
+  width: 46px;
+  height: 46px;
+  color: var(--symbol-color, var(--gold));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 12px var(--symbol-glow, var(--gold-glow)));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.artifact-symbol-card:hover .artifact-symbol-svg,
+.artifact-symbol-card.pin-card-focused .artifact-symbol-svg {
+  transform: scale(1.12);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 20px var(--symbol-color, var(--gold)));
+}
+
+/* Staggered Floating Animation */
+.artifact-symbol-card:nth-child(1) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 0s; }
+.artifact-symbol-card:nth-child(2) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 0.5s; }
+.artifact-symbol-card:nth-child(3) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 1.0s; }
+.artifact-symbol-card:nth-child(4) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 1.5s; }
+.artifact-symbol-card:nth-child(5) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 2.0s; }
+.artifact-symbol-card:nth-child(6) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 2.5s; }
+.artifact-symbol-card:nth-child(7) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 3.0s; }
+.artifact-symbol-card:nth-child(8) .symbol-pedestal { animation: floatSlow 4s ease-in-out infinite 3.5s; }
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Brand Palette Overrides */
+.symbol-phone {
+  --symbol-color: #E5C365;
+  --symbol-glow: rgba(229, 195, 101, 0.65);
+}
+.symbol-phone .symbol-halo {
+  background: radial-gradient(circle, #E5C365 0%, rgba(229, 195, 101, 0.25) 50%, transparent 70%);
+}
+
+.symbol-email {
+  --symbol-color: #F7E7B4;
+  --symbol-glow: rgba(247, 231, 180, 0.7);
+}
+.symbol-email .symbol-halo {
+  background: radial-gradient(circle, #F7E7B4 0%, rgba(247, 231, 180, 0.25) 50%, transparent 70%);
+}
+
+.symbol-instagram {
+  --symbol-color: #FA5888;
+  --symbol-glow: rgba(250, 88, 136, 0.75);
+}
+.symbol-instagram .symbol-halo {
+  background: radial-gradient(circle, #FA5888 0%, rgba(253, 141, 50, 0.4) 45%, transparent 70%);
+}
+
+.symbol-linkedin {
+  --symbol-color: #0A66C2;
+  --symbol-glow: rgba(10, 102, 194, 0.8);
+}
+.symbol-linkedin .symbol-halo {
+  background: radial-gradient(circle, #0A66C2 0%, rgba(0, 160, 220, 0.4) 50%, transparent 70%);
+}
+
+.symbol-twitter {
+  --symbol-color: #FFFFFF;
+  --symbol-glow: rgba(255, 255, 255, 0.75);
+}
+.symbol-twitter .symbol-halo {
+  background: radial-gradient(circle, #FFFFFF 0%, rgba(180, 200, 225, 0.4) 50%, transparent 70%);
+}
+
+.symbol-facebook {
+  --symbol-color: #1877F2;
+  --symbol-glow: rgba(24, 119, 242, 0.75);
+}
+.symbol-facebook .symbol-halo {
+  background: radial-gradient(circle, #1877F2 0%, rgba(24, 119, 242, 0.3) 50%, transparent 70%);
+}
+
+.symbol-maps {
+  --symbol-color: #EA4335;
+  --symbol-glow: rgba(234, 67, 53, 0.8);
+}
+.symbol-maps .symbol-halo {
+  background: radial-gradient(circle, #EA4335 0%, rgba(251, 188, 5, 0.4) 50%, transparent 70%);
+}
+
+.symbol-whatsapp {
+  --symbol-color: #25D366;
+  --symbol-glow: rgba(37, 211, 102, 0.85);
+}
+.symbol-whatsapp .symbol-halo {
+  background: radial-gradient(circle, #25D366 0%, rgba(18, 140, 126, 0.45) 50%, transparent 70%);
 }
 
 .swipe-dots {

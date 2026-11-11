@@ -260,197 +260,90 @@
             <div id="artifactsTrack" class="swipe-track pin-horizontal-track">
 
               <!-- ARTIFACT 1: PHONE -->
-              <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge crimson">24/7 Remand Line</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-01</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <h3 class="card-title">Telephone Hotline</h3>
-            <p class="card-desc">High Court chamber line & emergency custody call.</p>
-            <div class="nested-box" style="font-weight:700; color:var(--gold); font-size:12px; margin-bottom:12px;">
-              +91 85928 59287
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="tel:+918592859287" class="btn-gold-solid" style="flex:1; text-align:center;">Direct Call</a>
-            <button onclick="copyToClipboard('+918592859287', 'Phone Number')" class="btn-glass-outline" title="Copy Number" style="padding:7px 10px;">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-            </button>
-          </div>
-        </div>
+              <a href="tel:+918592859287" class="swipe-card artifact-symbol-card symbol-phone" aria-label="Telephone Hotline (+91 85928 59287)" title="Direct Chamber Call: +91 85928 59287">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    <path d="M14.05 2a9 9 0 0 1 8 7.94" stroke-dasharray="2 2"/>
+                    <path d="M14.05 6a5 5 0 0 1 4 3.95"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 2: EMAIL -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge gold">Official Pleadings</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-02</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </div>
-            <h3 class="card-title">Chamber Email</h3>
-            <p class="card-desc">Pleadings, case briefs, and corporate retainers.</p>
-            <div class="nested-box" style="font-weight:600; color:var(--text-title); font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:12px;">
-              varghesesabu@advocate.in
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="mailto:varghesesabu@advocate.in?subject=Legal%20Consultation%20Inquiry%20-%20High%20Court%20of%20Kerala" class="btn-gold-solid" style="flex:1; text-align:center;">Draft Mail</a>
-            <button onclick="copyToClipboard('varghesesabu@advocate.in', 'Chamber Email')" class="btn-glass-outline" title="Copy Email" style="padding:7px 10px;">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-            </button>
-          </div>
-        </div>
+              <!-- ARTIFACT 2: EMAIL -->
+              <a href="mailto:varghesesabu@advocate.in?subject=Legal%20Consultation%20Inquiry%20-%20High%20Court%20of%20Kerala" class="swipe-card artifact-symbol-card symbol-email" aria-label="Official Pleadings Email" title="Chamber Email: varghesesabu@advocate.in">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="16" x="2" y="4" rx="3"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    <path d="M7 16h10" stroke-opacity="0.35"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 3: INSTAGRAM -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge gold">1,544+ Followers</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-03</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </div>
-            <h3 class="card-title">Instagram &bull; vrgz_</h3>
-            <p class="card-desc">Legal thoughts, courtroom chronicles & life.</p>
-            <div class="nested-box" style="font-weight:600; color:var(--gold); font-size:12px; margin-bottom:12px;">
-              @vrgz_ &bull; Kerala HC
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://instagram.com/vrgz_" target="_blank" rel="noopener noreferrer" class="btn-glass-outline" style="flex:1; text-align:center;">
-              Visit @vrgz_ &rarr;
-            </a>
-          </div>
-        </div>
+              <!-- ARTIFACT 3: INSTAGRAM -->
+              <a href="https://instagram.com/vrgz_" target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-instagram" aria-label="Instagram Profile @vrgz_" title="Instagram: @vrgz_">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 4: LINKEDIN -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge gold">JGLS Pedigree</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-04</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </div>
-            <h3 class="card-title">LinkedIn Network</h3>
-            <p class="card-desc">Full pedigree, career timeline & associates.</p>
-            <div class="nested-box" style="font-weight:600; color:var(--gold); font-size:12px; margin-bottom:12px;">
-              in/varghese-sabu
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://www.linkedin.com/in/varghese-sabu" target="_blank" rel="noopener noreferrer" class="btn-glass-outline" style="flex:1; text-align:center;">
-              Connect on LinkedIn &rarr;
-            </a>
-          </div>
-        </div>
+              <!-- ARTIFACT 4: LINKEDIN -->
+              <a href="https://www.linkedin.com/in/varghese-sabu" target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-linkedin" aria-label="LinkedIn Professional Network" title="LinkedIn: Adv. Varghese Sabu">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 5: TWITTER / X -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge neutral">Judicial Insights</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-05</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </div>
-            <h3 class="card-title">X / Twitter Forum</h3>
-            <p class="card-desc">Live commentary on SC & Kerala HC verdicts.</p>
-            <div class="nested-box" style="font-weight:600; color:var(--text-title); font-size:12px; margin-bottom:12px;">
-              @AdvVargheseSabu
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://twitter.com/AdvVargheseSabu" target="_blank" rel="noopener noreferrer" class="btn-glass-outline" style="flex:1; text-align:center;">
-              View Legal Threads &rarr;
-            </a>
-          </div>
-        </div>
+              <!-- ARTIFACT 5: X / TWITTER -->
+              <a href="https://twitter.com/AdvVargheseSabu" target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-twitter" aria-label="X / Twitter Legal Forum" title="X: @AdvVargheseSabu">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 6: FACEBOOK -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge emerald">Civic Legal Aid</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-06</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.597 0 9 1.583 9 4.615V8z"/></svg>
-            </div>
-            <h3 class="card-title">Facebook Page</h3>
-            <p class="card-desc">Blood Donors Kerala & Youth Legal clinics.</p>
-            <div class="nested-box" style="font-weight:600; color:var(--text-title); font-size:12px; margin-bottom:12px;">
-              fb.com/AdvVargheseSabu
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="btn-glass-outline" style="flex:1; text-align:center;">
-              Chamber Page &rarr;
-            </a>
-          </div>
-        </div>
+              <!-- ARTIFACT 6: FACEBOOK -->
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-facebook" aria-label="Facebook Chamber Page" title="Facebook: Adv Varghese Sabu">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.597 0 9 1.583 9 4.615V8z"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 7: CHAMBER ADDRESS & GOOGLE PLACE -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge gold">Kacheripady, Kochi</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-07</span>
-            </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <h3 class="card-title">Chambers Location</h3>
-            <p class="card-desc">Adv. Varghese Sabu &amp; Associates, Kacheripady.</p>
-            <div class="nested-box" style="font-weight:500; color:var(--gold); font-size:11px; line-height:1.45; margin-bottom:12px;">
-              4D, AC 'M Lord, Mathai Manjooran Rd, Kacheripady, Kochi 682018<br>
-              <span style="color:var(--text-dim); font-size:10px;">Plus Code: X7RG+3H Kochi</span>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://www.google.com/maps/place/Varghese+Sabu+Advocate/@9.9901567,76.2764899,17z/data=!3m1!4b1!4m6!3m5!1s0x3b080d9c78eeb907:0x9512fd4c23c9f576!8m2!3d9.9901567!4d76.2764899!16s%2Fg%2F11vzy4rp1y?hl=en-IN" target="_blank" rel="noopener noreferrer" class="btn-glass-outline" style="flex:1; text-align:center;">
-              Google Maps &rarr;
-            </a>
-            <button onclick="copyToClipboard('4D, AC \'M Lord, Mathai Manjooran Rd, Kacheripady, Kochi, Kerala 682018', 'Chamber Address')" class="btn-glass-outline" title="Copy Address" style="padding:7px 10px;">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-            </button>
-          </div>
-        </div>
+              <!-- ARTIFACT 7: CHAMBER ADDRESS & GOOGLE PLACE -->
+              <a href="https://www.google.com/maps/place/Varghese+Sabu+Advocate/@9.9901567,76.2764899,17z/data=!3m1!4b1!4m6!3m5!1s0x3b080d9c78eeb907:0x9512fd4c23c9f576!8m2!3d9.9901567!4d76.2764899!16s%2Fg%2F11vzy4rp1y?hl=en-IN" target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-maps" aria-label="Chamber Location on Google Maps" title="Chambers: 4D, AC 'M Lord, Kacheripady, Kochi">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+              </a>
 
-        <!-- ARTIFACT 8: WHATSAPP -->
-        <div class="swipe-card craft-card spotlight-card">
-          <div>
-            <div class="card-top">
-              <span class="pill-badge emerald">Instant Dispatch</span>
-              <span style="font-size:11px; color:var(--text-dim); font-weight:700;">ART-08</span>
+              <!-- ARTIFACT 8: WHATSAPP -->
+              <a href="https://wa.me/918592859287?text=Hello%20Advocate%20Varghese%20Sabu,%20I%20would%20like%20to%20consult%20regarding%20a%20legal%20matter." target="_blank" rel="noopener noreferrer" class="swipe-card artifact-symbol-card symbol-whatsapp" aria-label="Direct WhatsApp Consultation" title="WhatsApp: +91 85928 59287">
+                <div class="symbol-halo"></div>
+                <div class="symbol-pedestal">
+                  <svg class="artifact-symbol-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                </div>
+              </a>
             </div>
-            <div class="icon-box">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-            </div>
-            <h3 class="card-title">WhatsApp Direct</h3>
-            <p class="card-desc">Send FIR, notices, or tender PDFs directly.</p>
-            <div class="nested-box" style="font-weight:700; color:var(--emerald); font-size:12px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
-              <span class="status-dot-emerald"></span>
-              <span>Available for Matters</span>
-            </div>
-          </div>
-          <div class="card-footer">
-            <a href="https://wa.me/918592859287?text=Hello%20Advocate%20Varghese%20Sabu,%20I%20would%20like%20to%20consult%20regarding%20a%20legal%20matter." target="_blank" rel="noopener noreferrer" class="btn-gold-solid" style="flex:1; text-align:center;">
-              Chat on WhatsApp
-            </a>
-          </div>
-        </div>
-
-      </div>
       <!-- Pagination Dots Indicator -->
       <div id="artifactsTrackDots" class="swipe-dots"></div>
     </div>
