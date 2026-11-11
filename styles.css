@@ -1017,6 +1017,55 @@ body {
 }
 
 /* ==========================================================================
+   COLLAPSIBLE STATUTORY CORPUS SECTION EXPLORER
+   ========================================================================== */
+.law-collapsible-content {
+  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin-top 0.35s ease;
+  max-height: 5000px;
+  opacity: 1;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.law-collapsible-content.is-collapsed {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.law-collapsed-teaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-card);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.law-collapsed-teaser:hover {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--gold-glow);
+}
+
+@media (max-width: 768px) {
+  .law-collapsed-teaser {
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* ==========================================================================
    SEARCH BAR & CATEGORY PILLS (SHADCN TABS STYLE)
    ========================================================================== */
 .search-box-wrap {

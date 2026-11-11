@@ -759,55 +759,97 @@
     <section id="lawExplorer" class="section-spacer reveal-on-scroll">
       <div class="craft-card" style="padding: 28px;">
         
-        <div class="section-header-row reveal-on-scroll" style="margin-bottom: 20px;">
-          <div class="section-header">
-            <div style="display:flex; align-items:center; gap:8px;">
+        <div class="section-header-row reveal-on-scroll" style="margin-bottom: 16px;">
+          <div class="section-header" style="flex: 1;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span class="pill-badge gold">Indian Law Search Engine</span>
               <span class="pill-badge emerald" id="lawResultCount">Loading Sections...</span>
+              <span id="lawCorpusStateBadge" class="pill-badge neutral" style="cursor:pointer;" onclick="LawCorpusController.toggle()">
+                Collapsed &bull; Click to Expand
+              </span>
             </div>
-            <h2 class="section-title">Indian Statutory Corpus & Section Explorer</h2>
+            <h2 class="section-title">Indian Statutory Corpus &amp; Section Explorer</h2>
             <p class="section-subtitle">
-              Real-time keyword search across new criminal statutes (<strong class="text-title">BNS 2023</strong> & <strong class="text-title">BNSS 2023</strong>), legacy codes (<strong class="text-title">IPC & CrPC</strong> cross-mapped), Constitution of India, Admiralty Act, and Arbitration.
+              Real-time keyword search across new criminal statutes (<strong class="text-title">BNS 2023</strong> &amp; <strong class="text-title">BNSS 2023</strong>), legacy codes (<strong class="text-title">IPC &amp; CrPC</strong> cross-mapped), Constitution of India, Admiralty Act, and Arbitration.
             </p>
           </div>
 
-          <button onclick="LawSearchEngine.simulateLiveApiQuery('Admiralty')" class="btn-glass-outline" style="align-self: flex-start;">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            <span>Sync Indian Kanoon API</span>
-          </button>
+          <div style="display:flex; align-items:center; gap:10px; align-self:flex-start; flex-wrap:wrap;">
+            <button id="lawCorpusToggleBtn" onclick="LawCorpusController.toggle()" class="btn-gold-solid" style="padding:8px 16px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:8px;">
+              <span id="lawCorpusToggleText">Expand Explorer</span>
+              <svg id="lawCorpusToggleChevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <button onclick="LawCorpusController.expand(); LawSearchEngine.simulateLiveApiQuery('Admiralty');" class="btn-glass-outline" style="padding:8px 14px; font-size:12px;" title="Sync Indian Kanoon API">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              <span>API Sync</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Live Search Bar -->
-        <div class="search-box-wrap reveal-on-scroll">
-          <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          <input 
-            type="text" 
-            id="lawSearchInput" 
-            placeholder="Search by keyword, offence, or section (e.g., 'bail', 'murder', 'ship arrest', 'quashing', '482', 'cheque bounce', 'bns 103')..."
-            class="search-input-field"
-          />
+        <!-- Compact Teaser Box shown when Collapsed -->
+        <div id="lawCorpusTeaser" class="law-collapsed-teaser" onclick="LawCorpusController.expandAndFocus()">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px; color:var(--gold);">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <span style="font-size:12.5px; font-weight:700;">Click to Open Search &amp; Section Explorer</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+              <span class="spec-chip" style="font-size:10.5px; padding:3px 8px;">BNS &amp; BNSS</span>
+              <span class="spec-chip" style="font-size:10.5px; padding:3px 8px;">IPC / CrPC Mapping</span>
+              <span class="spec-chip" style="font-size:10.5px; padding:3px 8px;">Admiralty &amp; Ship Arrest</span>
+              <span class="spec-chip" style="font-size:10.5px; padding:3px 8px;">Bail &amp; Quashing</span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--gold); font-weight:600;">
+            <span>Expand</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
         </div>
 
-        <!-- Popular Presets -->
-        <div class="stagger-children" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
-          <span style="font-size:11px; text-transform:uppercase; color:var(--text-dim); font-weight:700; margin-right:4px;">Quick Presets:</span>
-          <button data-law-preset="bail" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Bail (482/483)</button>
-          <button data-law-preset="quashing" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Quashing (528 BNSS)</button>
-          <button data-law-preset="ship arrest" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Ship Arrest (Admiralty)</button>
-          <button data-law-preset="murder" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Murder (103 BNS)</button>
-          <button data-law-preset="arbitration" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Arbitration s.9</button>
-          <button data-law-preset="cheque" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">138 NI Act</button>
-          <button data-law-preset="electronic" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">63 BSA (65B)</button>
-        </div>
+        <!-- Collapsible Body (Hidden by default when collapsed) -->
+        <div id="lawCorpusCollapsibleBody" class="law-collapsible-content is-collapsed">
 
-        <!-- Category Filter Pills -->
-        <div id="lawCategoryPills" class="filter-tabs-bar" style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
-          <!-- Injected via JavaScript -->
-        </div>
+          <!-- Live Search Bar -->
+          <div class="search-box-wrap reveal-on-scroll">
+            <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input 
+              type="text" 
+              id="lawSearchInput" 
+              placeholder="Search by keyword, offence, or section (e.g., 'bail', 'murder', 'ship arrest', 'quashing', '482', 'cheque bounce', 'bns 103')..."
+              class="search-input-field"
+            />
+          </div>
 
-        <!-- Results Grid -->
-        <div id="lawResultsGrid" class="one-look-grid" style="padding-top: 10px;">
-          <!-- Injected via JavaScript -->
+          <!-- Popular Presets -->
+          <div class="stagger-children" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--text-dim); font-weight:700; margin-right:4px;">Quick Presets:</span>
+            <button data-law-preset="bail" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Bail (482/483)</button>
+            <button data-law-preset="quashing" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Quashing (528 BNSS)</button>
+            <button data-law-preset="ship arrest" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Ship Arrest (Admiralty)</button>
+            <button data-law-preset="murder" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Murder (103 BNS)</button>
+            <button data-law-preset="arbitration" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Arbitration s.9</button>
+            <button data-law-preset="cheque" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">138 NI Act</button>
+            <button data-law-preset="electronic" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">63 BSA (65B)</button>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div id="lawCategoryPills" class="filter-tabs-bar" style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <!-- Results Grid -->
+          <div id="lawResultsGrid" class="one-look-grid" style="padding-top: 10px;">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <!-- Collapse button at bottom of results for convenience -->
+          <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+            <button onclick="LawCorpusController.collapse()" class="btn-glass-outline" style="font-size:12px; padding:8px 18px; display:inline-flex; align-items:center; gap:8px;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+              <span>Collapse Section Explorer</span>
+            </button>
+          </div>
+
         </div>
 
       </div>

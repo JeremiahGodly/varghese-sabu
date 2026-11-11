@@ -410,6 +410,9 @@ const LawSearchEngine = {
   },
 
   simulateLiveApiQuery(keyword) {
+    if (window.LawCorpusController) {
+      LawCorpusController.expand();
+    }
     showToast(`Querying Live Indian Kanoon & Ministry of Law API for "${keyword}"...`);
     setTimeout(() => {
       showToast(`Repository matched 3 statutory provisions & 2 High Court rulings for "${keyword}"`);
@@ -420,6 +423,99 @@ const LawSearchEngine = {
         this.filterAndRender();
       }
     }, 850);
+  }
+};
+
+// ==========================================================================
+// LAW CORPUS COLLAPSIBLE CONTROLLER
+// ==========================================================================
+const LawCorpusController = {
+  isExpanded: false,
+
+  init() {
+    this.updateUI();
+
+    // Listen to hash changes or nav clicks to auto-expand
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#lawExplorer') {
+        this.expand();
+      }
+    });
+
+    document.querySelectorAll('a[href="#lawExplorer"]').forEach(link => {
+      link.addEventListener('click', () => {
+        this.expand();
+      });
+    });
+  },
+
+  toggle() {
+    AudioFX.playClick(720, 0.03);
+    this.isExpanded = !this.isExpanded;
+    this.updateUI();
+  },
+
+  expand() {
+    if (!this.isExpanded) {
+      AudioFX.playClick(750, 0.03);
+      this.isExpanded = true;
+      this.updateUI();
+    }
+  },
+
+  expandAndFocus() {
+    this.expand();
+    const searchInput = document.getElementById('lawSearchInput');
+    if (searchInput) {
+      setTimeout(() => searchInput.focus(), 250);
+    }
+  },
+
+  collapse() {
+    AudioFX.playClick(650, 0.03);
+    this.isExpanded = false;
+    this.updateUI();
+    const section = document.getElementById('lawExplorer');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  },
+
+  updateUI() {
+    const body = document.getElementById('lawCorpusCollapsibleBody');
+    const teaser = document.getElementById('lawCorpusTeaser');
+    const toggleBtn = document.getElementById('lawCorpusToggleBtn');
+    const toggleText = document.getElementById('lawCorpusToggleText');
+    const toggleChevron = document.getElementById('lawCorpusToggleChevron');
+    const stateBadge = document.getElementById('lawCorpusStateBadge');
+
+    if (this.isExpanded) {
+      if (body) body.classList.remove('is-collapsed');
+      if (teaser) teaser.style.display = 'none';
+      if (toggleText) toggleText.textContent = 'Collapse Explorer';
+      if (toggleChevron) toggleChevron.style.transform = 'rotate(180deg)';
+      if (stateBadge) {
+        stateBadge.textContent = 'Expanded • Click to Collapse';
+        stateBadge.className = 'pill-badge gold';
+      }
+      if (toggleBtn) {
+        toggleBtn.classList.remove('btn-gold-solid');
+        toggleBtn.classList.add('btn-glass-outline');
+      }
+    } else {
+      if (body) body.classList.add('is-collapsed');
+      if (teaser) teaser.style.display = 'flex';
+      if (toggleText) toggleText.textContent = 'Expand Explorer';
+      if (toggleChevron) toggleChevron.style.transform = 'rotate(0deg)';
+      if (stateBadge) {
+        stateBadge.textContent = 'Collapsed • Click to Expand';
+        stateBadge.className = 'pill-badge neutral';
+      }
+      if (toggleBtn) {
+        toggleBtn.classList.remove('btn-glass-outline');
+        toggleBtn.classList.add('btn-gold-solid');
+      }
+    }
   }
 };
 
@@ -993,6 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
   AmbientFluidCanvas.init();
   ScrollRevealEngine.init();
   LawSearchEngine.init();
+  LawCorpusController.init();
   SwipeController.init();
   initSpotlight();
 
