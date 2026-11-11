@@ -604,41 +604,25 @@ body {
   flex-wrap: nowrap !important;
   width: max-content !important;
   min-width: 100% !important;
-  gap: 16px;
+  gap: 24px;
   overflow: visible !important;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   transition: none !important;
-  padding: 8px 4px 14px 4px;
+  padding: 8px clamp(120px, 35vw, 360px) 14px 8px;
   contain: layout paint;
 }
 
 @media (max-width: 768px) {
   .pin-horizontal-track {
-    gap: 12px;
-  }
-
-  /* Extreme Mobile Performance Optimization - Zero Compositor Lag */
-  .swipe-card {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(18, 20, 26, 0.96) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
-    transition: none !important;
-    contain: content;
-    will-change: auto !important;
-  }
-
-  .pin-card-focused {
-    transform: none !important;
-    box-shadow: 0 0 0 1.5px var(--gold) !important;
+    gap: 16px;
+    padding-right: clamp(140px, 45vw, 320px) !important;
   }
 }
 
 .pin-card-focused {
-  border-color: var(--gold) !important;
-  box-shadow: 0 16px 40px -10px var(--gold-glow), 0 0 0 1px var(--gold) !important;
-  transform: translateY(-4px) scale(1.02);
+  border-left-color: var(--gold) !important;
+  border-left-width: 3px !important;
 }
 
 /* ==========================================================================
@@ -738,29 +722,104 @@ body {
   display: none;
 }
 
+/* ==========================================================================
+   TRANSPARENT FLOATING TEXT CARDS (ZERO BACKGROUNDS, ZERO HEAVY SHADOWS)
+   ========================================================================== */
 .swipe-card {
   flex: 0 0 310px;
-  min-width: 310px;
+  min-width: 300px;
   max-width: 330px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: 20px;
-  padding: 22px;
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  box-shadow: var(--card-shadow);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  background: transparent !important;
+  border: none !important;
+  border-left: 2px solid rgba(212, 175, 55, 0.3) !important;
+  border-radius: 0 !important;
+  padding: 10px 16px 12px 18px !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease !important;
 }
 
 .swipe-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--border-hover);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  transform: none !important;
+  border-left-color: var(--gold) !important;
+  box-shadow: none !important;
+}
+
+.swipe-card.pin-card-focused {
+  border-left-color: var(--gold) !important;
+  border-left-width: 3px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.swipe-card.spotlight-card::before,
+.swipe-card.spotlight-card::after {
+  display: none !important;
+}
+
+.swipe-card .card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.swipe-card .icon-box {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin-bottom: 8px !important;
+  color: var(--gold) !important;
+}
+
+.swipe-card .card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-title);
+  margin-bottom: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.swipe-card .card-subtitle {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.swipe-card .card-desc {
+  font-size: 12px;
+  color: var(--text-body);
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.swipe-card .nested-box {
+  background: transparent !important;
+  border: none !important;
+  border-left: 1.5px solid rgba(212, 175, 55, 0.4) !important;
+  border-radius: 0 !important;
+  padding: 4px 0 4px 10px !important;
+  margin-bottom: 10px !important;
+  box-shadow: none !important;
+}
+
+.swipe-card .card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
 .swipe-dots {
@@ -1888,10 +1947,14 @@ textarea.form-input:focus {
 
   .swipe-card {
     flex: 0 0 78vw;
-    min-width: 250px;
-    max-width: 290px;
-    padding: 14px;
-    border-radius: 16px;
+    min-width: 260px;
+    max-width: 300px;
+    padding: 8px 12px 10px 14px !important;
+    background: transparent !important;
+    border: none !important;
+    border-left: 2px solid rgba(212, 175, 55, 0.35) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 
   .swipe-card .card-top {

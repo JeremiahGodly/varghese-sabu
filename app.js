@@ -695,22 +695,31 @@ const PinScrollEngine = {
   recalculate() {
     const isMobile = window.innerWidth <= 768;
     const viewportHeight = window.innerHeight;
-    const speedFactor = isMobile ? 0.6 : 1.1;
+    const speedFactor = isMobile ? 0.75 : 1.1;
 
     this.sections.forEach(item => {
       const track = item.trackEl;
       const parent = track.parentElement;
       const parentWidth = parent ? parent.clientWidth : window.innerWidth;
       
-      const trackScrollWidth = track.scrollWidth;
-      const maxTranslate = Math.max(0, trackScrollWidth - parentWidth + 32);
+      const cards = track.querySelectorAll('.swipe-card');
+      const lastCard = cards[cards.length - 1];
+
+      let maxTranslate = 0;
+      if (lastCard) {
+        // Measure exact distance to bring last card (WhatsApp) completely into view with generous margin
+        const lastCardEnd = lastCard.offsetLeft + lastCard.offsetWidth;
+        const extraEndPadding = isMobile ? 90 : 130;
+        maxTranslate = Math.max(0, lastCardEnd - parentWidth + extraEndPadding);
+      } else {
+        maxTranslate = Math.max(0, track.scrollWidth - parentWidth + 100);
+      }
       item.maxTranslate = maxTranslate;
 
-      // Cache section offsetTop to eliminate layout thrashing during scroll
-      item.offsetTop = item.sectionEl.offsetTop;
-
       if (maxTranslate > 0) {
-        const scrollDistance = Math.round(maxTranslate * speedFactor);
+        // Generous endBuffer ensures the WhatsApp card stays fully resting on screen before unpinning
+        const endBuffer = isMobile ? 220 : 320;
+        const scrollDistance = Math.round(maxTranslate * speedFactor) + endBuffer;
         item.scrollDistance = scrollDistance;
         item.sectionEl.style.height = `${viewportHeight + scrollDistance}px`;
       } else {
@@ -723,12 +732,21 @@ const PinScrollEngine = {
   onScroll() {
     const isMobile = window.innerWidth <= 768;
     const stickyTop = isMobile ? 56 : 68;
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-    this.sections.forEach(item => {
-      if (item.maxTranslate <= 0 || item.scrollDistance <= 0) return;
+    // Fast read phase (batch DOM reads)
+    const reads = this.sections.map(item => {
+      if (item.maxTranslate <= 0 || item.scrollDistance <= 0) return null;
+      const rect = item.sectionEl.getBoundingClientRect();
+      return {
+        item,
+        topOffset: rect.top - stickyTop
+      };
+    });
 
-      const topOffset = item.offsetTop - scrollY - stickyTop;
+    // Fast write phase (apply transforms together)
+    reads.forEach(read => {
+      if (!read) return;
+      const { item, topOffset } = read;
 
       let progress = 0;
       if (topOffset > 0) {
@@ -753,11 +771,9 @@ const PinScrollEngine = {
               dot.classList.toggle('active', idx === activeIdx);
             });
           }
-          if (!isMobile) {
-            item.cards.forEach((card, idx) => {
-              card.classList.toggle('pin-card-focused', idx === activeIdx);
-            });
-          }
+          item.cards.forEach((card, idx) => {
+            card.classList.toggle('pin-card-focused', idx === activeIdx);
+          });
         }
       }
     });
@@ -774,7 +790,9 @@ const PinScrollEngine = {
     const isMobile = window.innerWidth <= 768;
     const stickyTop = isMobile ? 56 : 68;
 
-    const targetScrollY = item.offsetTop - stickyTop + (targetProgress * item.scrollDistance);
+    const rect = item.sectionEl.getBoundingClientRect();
+    const sectionTop = rect.top + window.scrollY;
+    const targetScrollY = sectionTop - stickyTop + (targetProgress * item.scrollDistance);
 
     window.scrollTo({
       top: Math.round(targetScrollY),
