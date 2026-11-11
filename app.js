@@ -120,12 +120,12 @@ function downloadVCard() {
     'N:Sabu;Varghese;;Advocate;',
     'FN:Advocate Varghese Sabu',
     'TITLE:Advocate, High Court of Kerala',
-    'ORG:Chambers of Advocate Varghese Sabu;John Manavalan & Associates',
+    'ORG:Adv. Varghese Sabu & Associates;High Court of Kerala',
     'TEL;TYPE=CELL,VOICE,PREF:+918592859287',
     'EMAIL;TYPE=WORK,INTERNET:varghesesabu@advocate.in',
-    'URL;TYPE=WORK:https://www.linkedin.com/in/varghese-sabu',
-    'ADR;TYPE=WORK:;;High Court Junction, Marine Drive;Kochi;Kerala;682031;India',
-    'NOTE:Advocate High Court of Kerala | Specialization: Maritime Law, Criminal Defense (BNS/BNSS), Commercial Arbitration & Constitutional Writs. Quote: Be as shrewd as snakes and as innocent as doves.',
+    'URL;TYPE=WORK:https://share.google/jFaVESQebZ5UaLr1l',
+    'ADR;TYPE=WORK:;;4D, AC \'M Lord, Mathai Manjooran Rd, Kacheripady;Kochi;Kerala;682018;India',
+    'NOTE:Advocate High Court of Kerala | Adv. Varghese Sabu & Associates. 5.0 Star Google Rating (43 Reviews). Practice: Civil, Criminal (BNS/BNSS), Maritime, Real Estate, Service Law & Arbitration. Quote: Be as shrewd as snakes and as innocent as doves.',
     'X-SOCIALPROFILE;type=instagram:https://instagram.com/vrgz_',
     'END:VCARD'
   ].join('\r\n');
@@ -576,7 +576,7 @@ function handleConsultationSubmit(e) {
   const name = document.getElementById('clientName')?.value || '';
   const phone = document.getElementById('clientPhone')?.value || '';
   const matter = document.getElementById('clientMatter')?.value || '';
-  const mode = document.getElementById('clientMode')?.value || 'Chamber Consultation (Marine Drive, Kochi)';
+  const mode = document.getElementById('clientMode')?.value || 'Chambers (4D AC \'M Lord, Kacheripady, Kochi)';
   const date = document.getElementById('clientDate')?.value || '';
   const notes = document.getElementById('clientNotes')?.value || '';
 
