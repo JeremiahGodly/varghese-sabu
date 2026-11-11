@@ -479,92 +479,99 @@ function showJudgmentDetail(index) {
   DrawerController.open(item.caseNo, item.court, 'Reported Judgment', 'badge-emerald', html);
 }
 
-// INTERACTIVE LEGAL RETAINER & FEE CALCULATOR
-const FeeCalculator = {
-  rates: {
-    'writ': { base: 35000, max: 75000, name: 'High Court Writ Petition (Art 226)' },
-    'quash': { base: 40000, max: 80000, name: 'FIR Quashing Petition (Section 528 BNSS / 482 CrPC)' },
-    'anticipatory-bail': { base: 25000, max: 55000, name: 'Anticipatory Bail (Section 482 BNSS / High Court)' },
-    'regular-bail': { base: 20000, max: 45000, name: 'Regular Bail Petition (High Court / Sessions)' },
-    'admiralty': { base: 120000, max: 250000, name: 'Admiralty Suit & Foreign Ship Arrest (High Court of Kerala)' },
-    'arbitration': { base: 60000, max: 150000, name: 'Commercial Arbitration (Section 9/11/34)' },
-    'cheque-138': { base: 15000, max: 35000, name: 'Section 138 NI Act Cheque Dishonour' },
-    'legal-opinion': { base: 10000, max: 25000, name: 'Written Legal Opinion & Title/Contract Vetting' }
+// HORIZONTAL MOTION GRAPHICS SWIPE CONTROLLER
+const SwipeController = {
+  tracks: ['artifactsTrack', 'reviewsTrack', 'judgmentsTrack'],
+
+  init() {
+    this.tracks.forEach(trackId => {
+      const track = document.getElementById(trackId);
+      const dotsContainer = document.getElementById(`${trackId}Dots`);
+      if (!track || !dotsContainer) return;
+
+      const cards = track.querySelectorAll('.swipe-card');
+      const cardCount = cards.length;
+
+      // Render dots
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < cardCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = `swipe-dot ${i === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          AudioFX.playClick(650, 0.02);
+          this.goTo(trackId, i);
+        });
+        dotsContainer.appendChild(dot);
+      }
+
+      // Track scroll event to update dots
+      let scrollTimer = null;
+      track.addEventListener('scroll', () => {
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          this.updateActiveDot(trackId);
+        }, 60);
+      }, { passive: true });
+    });
   },
 
-  urgencyMultiplier: {
-    'standard': 1.0,
-    'urgent': 1.35,
-    'emergency': 1.75
+  next(trackId) {
+    AudioFX.playClick(750, 0.03);
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const card = track.querySelector('.swipe-card');
+    const scrollAmount = card ? (card.offsetWidth + 14) : 320;
+    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   },
 
-  calculate() {
-    const matterType = document.getElementById('calcMatterType')?.value || 'writ';
-    const urgency = document.getElementById('calcUrgency')?.value || 'standard';
-    const forum = document.getElementById('calcForum')?.value || 'hc';
+  prev(trackId) {
+    AudioFX.playClick(650, 0.03);
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const card = track.querySelector('.swipe-card');
+    const scrollAmount = card ? (card.offsetWidth + 14) : 320;
+    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  },
 
-    const baseData = this.rates[matterType] || this.rates['writ'];
-    const multiplier = this.urgencyMultiplier[urgency] || 1.0;
-    const forumBonus = forum === 'hc' ? 1.0 : (forum === 'tribunal' ? 0.9 : 0.75);
-
-    const estLow = Math.round((baseData.base * multiplier * forumBonus) / 1000) * 1000;
-    const estHigh = Math.round((baseData.max * multiplier * forumBonus) / 1000) * 1000;
-
-    const displayEl = document.getElementById('calcResultDisplay');
-    const noteEl = document.getElementById('calcResultNote');
-
-    if (displayEl) {
-      displayEl.innerHTML = `₹${estLow.toLocaleString('en-IN')} &ndash; ₹${estHigh.toLocaleString('en-IN')}`;
+  goTo(trackId, index) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const cards = track.querySelectorAll('.swipe-card');
+    if (cards[index]) {
+      cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
     }
-    if (noteEl) {
-      noteEl.textContent = `Includes preparation, pleadings drafting, case indexing, and initial admission hearings before ${forum === 'hc' ? 'the High Court of Kerala' : 'competent judicial forum'}. Statutory court fees and stamp duties applicable as per actuals.`;
-    }
-  }
-};
-
-// CLIENT CASE DOCUMENT CHECKLIST TOOL
-const DocumentChecklists = {
-  lists: {
-    'bail': [
-      { id: 'b1', name: 'Certified Copy of FIR and FIS (First Information Statement)' },
-      { id: 'b2', name: 'Remand Report / Custody Order Copy from Magistrate' },
-      { id: 'b3', name: 'Order of Magistrate/Sessions Court rejecting prior bail' },
-      { id: 'b4', name: 'Accused Identity Verification (Aadhaar / Voter ID)' },
-      { id: 'b5', name: 'Medical / Employment records if urging exceptional humanitarian grounds' },
-      { id: 'b6', name: 'Vakalatnama duly executed (or Jail Vakalatnama with Jailer attestation)' }
-    ],
-    'writ': [
-      { id: 'w1', name: 'Impugned Government Order / Administrative Circular / Tender Document' },
-      { id: 'w2', name: 'Copy of Petitioner representations submitted to Authorities' },
-      { id: 'w3', name: 'Postal Acknowledgement / Receipts proving receipt by Respondents' },
-      { id: 'w4', name: 'Affidavit affirming no other petition is filed in the same cause' },
-      { id: 'w5', name: 'Vakalatnama with Advocate Welfare Fund Stamp' }
-    ],
-    'quashing': [
-      { id: 'q1', name: 'Certified Copy of Crime FIR / Charge Sheet / Final Report' },
-      { id: 'q2', name: 'Underlying Commercial Contracts, Invoices, or Bank Statements' },
-      { id: 'q3', name: 'Affidavit of Compromise / Settlement Deed (if settled by parties)' },
-      { id: 'q4', name: 'Vakalatnama executed by the Petitioner' }
-    ],
-    'admiralty': [
-      { id: 'a1', name: 'Bunker Delivery Receipts (BDRs) or Bill of Lading (B/L)' },
-      { id: 'a2', name: 'Vessel IMO Number, Call Sign, Flag & Current Port Call status' },
-      { id: 'a3', name: 'Unpaid Invoices, Demurrage Claims & Demand Notices' },
-      { id: 'a4', name: 'Power of Attorney (POA) with apostille / consularization' }
-    ]
   },
 
-  render(type = 'bail') {
-    const container = document.getElementById('checklistContainer');
-    if (!container) return;
+  updateActiveDot(trackId) {
+    const track = document.getElementById(trackId);
+    const dotsContainer = document.getElementById(`${trackId}Dots`);
+    if (!track || !dotsContainer) return;
 
-    const items = this.lists[type] || this.lists['bail'];
-    container.innerHTML = items.map(item => `
-      <label class="flex items-start gap-3 p-3 rounded-xl nested-box border border-[var(--border-subtle)] hover:border-amber-500/50 cursor-pointer transition-all shadow-sm text-xs text-body">
-        <input type="checkbox" class="mt-0.5 rounded border-slate-400 text-amber-500 focus:ring-amber-400" />
-        <span>${item.name}</span>
-      </label>
-    `).join('');
+    const cards = track.querySelectorAll('.swipe-card');
+    const dots = dotsContainer.querySelectorAll('.swipe-dot');
+    if (!cards.length || !dots.length) return;
+
+    const trackLeft = track.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, i) => {
+      const cardLeft = card.getBoundingClientRect().left;
+      const dist = Math.abs(cardLeft - trackLeft);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestIndex = i;
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === closestIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
   }
 };
 
@@ -801,8 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
   PatternSwitcher.init();
   AmbientFluidCanvas.init();
   LawSearchEngine.init();
-  FeeCalculator.calculate();
-  DocumentChecklists.render('bail');
+  SwipeController.init();
   initSpotlight();
 
   // Drawer Backdrop listener
@@ -816,23 +822,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && DrawerController.isOpen) {
       DrawerController.close();
     }
-  });
-
-  // Checklist tabs
-  const checklistTabs = document.querySelectorAll('[data-checklist-tab]');
-  checklistTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      AudioFX.playClick(600, 0.03);
-      checklistTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      DocumentChecklists.render(tab.getAttribute('data-checklist-tab'));
-    });
-  });
-
-  // Retainer calculator event listeners
-  ['calcMatterType', 'calcUrgency', 'calcForum'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('change', () => FeeCalculator.calculate());
   });
 
   // Consultation form
