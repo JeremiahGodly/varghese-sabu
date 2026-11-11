@@ -608,13 +608,30 @@ body {
   overflow: visible !important;
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: none !important;
   padding: 8px 4px 14px 4px;
+  contain: layout paint;
 }
 
 @media (max-width: 768px) {
   .pin-horizontal-track {
     gap: 12px;
+  }
+
+  /* Extreme Mobile Performance Optimization - Zero Compositor Lag */
+  .swipe-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(18, 20, 26, 0.96) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
+    transition: none !important;
+    contain: content;
+    will-change: auto !important;
+  }
+
+  .pin-card-focused {
+    transform: none !important;
+    box-shadow: 0 0 0 1.5px var(--gold) !important;
   }
 }
 

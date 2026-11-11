@@ -695,7 +695,7 @@ const PinScrollEngine = {
   recalculate() {
     const isMobile = window.innerWidth <= 768;
     const viewportHeight = window.innerHeight;
-    const speedFactor = isMobile ? 1.15 : 1.25;
+    const speedFactor = isMobile ? 0.6 : 1.1;
 
     this.sections.forEach(item => {
       const track = item.trackEl;
@@ -705,6 +705,9 @@ const PinScrollEngine = {
       const trackScrollWidth = track.scrollWidth;
       const maxTranslate = Math.max(0, trackScrollWidth - parentWidth + 32);
       item.maxTranslate = maxTranslate;
+
+      // Cache section offsetTop to eliminate layout thrashing during scroll
+      item.offsetTop = item.sectionEl.offsetTop;
 
       if (maxTranslate > 0) {
         const scrollDistance = Math.round(maxTranslate * speedFactor);
@@ -720,28 +723,25 @@ const PinScrollEngine = {
   onScroll() {
     const isMobile = window.innerWidth <= 768;
     const stickyTop = isMobile ? 56 : 68;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
     this.sections.forEach(item => {
       if (item.maxTranslate <= 0 || item.scrollDistance <= 0) return;
 
-      const rect = item.sectionEl.getBoundingClientRect();
-      const topOffset = rect.top - stickyTop;
+      const topOffset = item.offsetTop - scrollY - stickyTop;
 
       let progress = 0;
       if (topOffset > 0) {
-        // Not reached pin yet
         progress = 0;
       } else if (Math.abs(topOffset) >= item.scrollDistance) {
-        // Pin finished, section moving off-screen
         progress = 1;
       } else {
-        // Active pin state
         progress = Math.abs(topOffset) / item.scrollDistance;
       }
 
       progress = Math.max(0, Math.min(1, progress));
       const translateX = -progress * item.maxTranslate;
-      item.trackEl.style.transform = `translate3d(${translateX.toFixed(2)}px, 0, 0)`;
+      item.trackEl.style.transform = `translate3d(${translateX.toFixed(1)}px, 0, 0)`;
 
       const cardCount = item.cards.length;
       if (cardCount > 0) {
@@ -753,9 +753,11 @@ const PinScrollEngine = {
               dot.classList.toggle('active', idx === activeIdx);
             });
           }
-          item.cards.forEach((card, idx) => {
-            card.classList.toggle('pin-card-focused', idx === activeIdx);
-          });
+          if (!isMobile) {
+            item.cards.forEach((card, idx) => {
+              card.classList.toggle('pin-card-focused', idx === activeIdx);
+            });
+          }
         }
       }
     });
@@ -772,8 +774,7 @@ const PinScrollEngine = {
     const isMobile = window.innerWidth <= 768;
     const stickyTop = isMobile ? 56 : 68;
 
-    const sectionTop = item.sectionEl.getBoundingClientRect().top + window.scrollY;
-    const targetScrollY = sectionTop - stickyTop + (targetProgress * item.scrollDistance);
+    const targetScrollY = item.offsetTop - stickyTop + (targetProgress * item.scrollDistance);
 
     window.scrollTo({
       top: Math.round(targetScrollY),
@@ -801,34 +802,27 @@ const PinScrollEngine = {
     this.sections.forEach(item => {
       let startX = 0;
       let startY = 0;
-      let isDragging = false;
-
       const track = item.trackEl;
 
       track.addEventListener('touchstart', (e) => {
         if (!e.touches || e.touches.length !== 1) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
-        isDragging = true;
       }, { passive: true });
 
-      track.addEventListener('touchmove', (e) => {
-        if (!isDragging || !e.touches || e.touches.length !== 1) return;
-        const currentX = e.touches[0].clientX;
-        const currentY = e.touches[0].clientY;
-        const diffX = startX - currentX;
-        const diffY = startY - currentY;
+      track.addEventListener('touchend', (e) => {
+        if (!e.changedTouches || e.changedTouches.length !== 1) return;
+        const diffX = startX - e.changedTouches[0].clientX;
+        const diffY = startY - e.changedTouches[0].clientY;
 
-        // Convert horizontal finger swipe to page scroll
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 8) {
-          window.scrollBy({ top: diffX * 1.15, behavior: 'auto' });
-          startX = currentX;
-          startY = currentY;
+        // Clean swipe detection without fighting touchmove compositor
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+          if (diffX > 0) {
+            this.next(item.id);
+          } else {
+            this.prev(item.id);
+          }
         }
-      }, { passive: true });
-
-      track.addEventListener('touchend', () => {
-        isDragging = false;
       }, { passive: true });
     });
   }
@@ -907,6 +901,8 @@ const AmbientFluidCanvas = {
   orbs: [],
   mouse: { x: -1000, y: -1000, targetX: -1000, targetY: -1000 },
   animId: null,
+  isScrolling: false,
+  scrollEndTimer: null,
 
   init() {
     this.canvas = document.getElementById('ambientFluidCanvas');
@@ -919,6 +915,15 @@ const AmbientFluidCanvas = {
       this.mouse.targetX = e.clientX;
       this.mouse.targetY = e.clientY;
     });
+
+    // Pause canvas redrawing during rapid mobile scroll to free GPU
+    window.addEventListener('scroll', () => {
+      this.isScrolling = true;
+      if (this.scrollEndTimer) clearTimeout(this.scrollEndTimer);
+      this.scrollEndTimer = setTimeout(() => {
+        this.isScrolling = false;
+      }, 90);
+    }, { passive: true });
 
     this.createOrbs();
     this.animate();
@@ -970,6 +975,13 @@ const AmbientFluidCanvas = {
 
   animate() {
     if (!this.ctx) return;
+
+    // Skip heavy canvas repaint on mobile during active scroll
+    if (this.isScrolling && window.innerWidth <= 768) {
+      this.animId = requestAnimationFrame(() => this.animate());
+      return;
+    }
+
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     this.ctx.clearRect(0, 0, this.width, this.height);
 
