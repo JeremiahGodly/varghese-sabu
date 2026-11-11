@@ -8,6 +8,7 @@
   
   <!-- Standalone Luxury Glass Law Styles (100% Safari & Chrome Compatible) -->
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js-ready');</script>
 </head>
 <body>
 
@@ -89,7 +90,7 @@
         
         <!-- Left: Bio & Pedigree -->
         <div>
-          <div class="hero-badge-pill" style="display:inline-flex; flex-wrap:wrap; gap:8px; align-items:center;">
+          <div class="hero-badge-pill reveal-on-scroll" style="display:inline-flex; flex-wrap:wrap; gap:8px; align-items:center;">
             <div style="display:flex; align-items:center; gap:6px;">
               <span class="hero-pulse-dot"></span>
               <span>Bar Council of Kerala (K/1842/2019) &bull; High Court Bar Member</span>
@@ -100,22 +101,22 @@
             </a>
           </div>
 
-          <h1 class="hero-title">
+          <h1 class="hero-title reveal-on-scroll">
             Advocate Varghese Sabu
           </h1>
 
           <!-- Advocate Creed Quote -->
-          <blockquote class="hero-quote">
+          <blockquote class="hero-quote reveal-on-scroll">
             "Be as shrewd as snakes and as innocent as doves."
             <span class="hero-quote-source">— Matthew 10:16 &bull; High Court Judicial Creed</span>
           </blockquote>
 
-          <p class="hero-description">
+          <p class="hero-description reveal-on-scroll">
             Counsel practicing before the <strong class="text-title">High Court of Kerala</strong> and Subordinate Courts across Ernakulam. Managing Advocate at <strong class="text-title">Adv. Varghese Sabu &amp; Associates</strong> (associated with John Manavalan and Associates) with 7+ years of litigation pedigree specializing in <span class="text-gold font-semibold">Civil Litigation</span>, <span class="text-gold font-semibold">Criminal Defense &amp; Bail (BNS &amp; BNSS)</span>, <span class="text-gold font-semibold">Maritime Law &amp; Ship Arrests</span>, <span class="text-gold font-semibold">Real Estate &amp; Property Disputes</span>, <span class="text-gold font-semibold">Labour &amp; Service Jurisprudence</span>, and <span class="text-gold font-semibold">Commercial Arbitration</span>.
           </p>
 
           <!-- Practice Area Badges -->
-          <div class="hero-specialties">
+          <div class="hero-specialties reveal-on-scroll stagger-children">
             <span class="spec-chip">
               <svg class="icon-inline" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               <span>Maritime &amp; Admiralty Claims</span>
@@ -147,7 +148,7 @@
           </div>
 
           <!-- Quick Action Buttons -->
-          <div class="hero-ctas">
+          <div class="hero-ctas reveal-on-scroll stagger-children">
             <a href="#artifacts" class="btn-gold-solid">
               <span>View Contact Artifacts</span>
               <span>&rarr;</span>
@@ -164,7 +165,7 @@
         </div>
 
         <!-- Right: Solo Advocate Portrait Card in Robes -->
-        <div class="hero-portrait-card spotlight-card">
+        <div class="hero-portrait-card spotlight-card reveal-on-scroll">
           <div class="hero-portrait-compact-row">
             <div class="portrait-frame">
               <img 
@@ -185,7 +186,7 @@
           </div>
 
           <!-- Hero Glanceable Stat Badges -->
-          <div class="hero-stat-badges">
+          <div class="hero-stat-badges stagger-children">
             <div class="stat-mini-box">
               <span class="stat-label">High Court Pedigree</span>
               <span class="stat-value" style="color:var(--gold);">7+ Years</span>
@@ -217,42 +218,49 @@
       </div>
     </section>
 
-    <!-- SECTION: DIGITAL ARTIFACTS DOSSIER (HORIZONTAL SWIPE RAIL) -->
-    <section id="artifacts" class="section-spacer">
-      <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
-        <div class="section-header">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="pill-badge gold">Official Communications Dossier</span>
-            <span class="pill-badge neutral">Swipe Left &harr; Right &bull; 8 Channels</span>
+    <!-- SECTION: DIGITAL ARTIFACTS DOSSIER (STICKY HORIZONTAL SCROLL PIN) -->
+    <section id="artifacts" class="pin-scroll-section" data-pin-track="artifactsTrack">
+      <div class="pin-sticky-box">
+        <div class="site-wrapper pin-content-inner">
+          <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
+            <div class="section-header reveal-on-scroll">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="pill-badge gold">Official Communications Dossier</span>
+                <span class="pill-badge neutral">
+                  <span class="pin-scroll-hint">
+                    Scroll Down to Slide Cards
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </span>
+                </span>
+              </div>
+              <h2 class="section-title">Chamber Touchpoints &amp; Digital Artifacts</h2>
+              <p class="section-subtitle">
+                Direct action triggers, instant WhatsApp dispatch, chamber directions, and verified official networks.
+              </p>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <button onclick="downloadVCard()" class="btn-gold-solid" style="align-self:center; font-size:12px; padding:7px 12px;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>Save vCard</span>
+              </button>
+              <div class="swipe-controls">
+                <button class="swipe-arrow-btn" onclick="SwipeController.prev('artifactsTrack')" title="Swipe Left" aria-label="Swipe Left">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button class="swipe-arrow-btn" onclick="SwipeController.next('artifactsTrack')" title="Swipe Right" aria-label="Swipe Right">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
           </div>
-          <h2 class="section-title">Chamber Touchpoints &amp; Digital Artifacts</h2>
-          <p class="section-subtitle">
-            Direct action triggers, instant WhatsApp dispatch, chamber directions, and verified official networks.
-          </p>
-        </div>
 
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-          <button onclick="downloadVCard()" class="btn-gold-solid" style="align-self:center; font-size:12px; padding:7px 12px;">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            <span>Save vCard</span>
-          </button>
-          <div class="swipe-controls">
-            <button class="swipe-arrow-btn" onclick="SwipeController.prev('artifactsTrack')" title="Swipe Left" aria-label="Swipe Left">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <button class="swipe-arrow-btn" onclick="SwipeController.next('artifactsTrack')" title="Swipe Right" aria-label="Swipe Right">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+          <!-- 8 UNIFIED ARTIFACT CARDS PIN HORIZONTAL TRACK -->
+          <div class="swipe-rail-wrapper">
+            <div id="artifactsTrack" class="swipe-track pin-horizontal-track">
 
-      <!-- 8 UNIFIED ARTIFACT CARDS SWIPE TRACK -->
-      <div class="swipe-rail-wrapper">
-        <div id="artifactsTrack" class="swipe-track">
-
-          <!-- ARTIFACT 1: PHONE -->
-          <div class="swipe-card craft-card spotlight-card">
+              <!-- ARTIFACT 1: PHONE -->
+              <div class="swipe-card craft-card spotlight-card">
           <div>
             <div class="card-top">
               <span class="pill-badge crimson">24/7 Remand Line</span>
@@ -446,45 +454,49 @@
       <!-- Pagination Dots Indicator -->
       <div id="artifactsTrackDots" class="swipe-dots"></div>
     </div>
-  </section>
-
-    <!-- SECTION: VERIFIED GOOGLE CLIENT REVIEWS (HORIZONTAL SWIPE RAIL) -->
-    <section id="reviews" class="section-spacer">
-      <div class="craft-card" style="padding: 24px;">
-        <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
-          <div class="section-header">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="pill-badge gold">Client Endorsements</span>
-              <span class="pill-badge emerald" style="display:inline-flex; align-items:center; gap:5px;">
-                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <span>5.0 / 5.0 (43 Google Reviews)</span>
-              </span>
-            </div>
-            <h2 class="section-title">Verified Client Testimonials &amp; Google Reviews</h2>
-            <p class="section-subtitle">
-              Authentic feedback from individuals, families, and businesses represented before the High Court of Kerala. Swipe left &amp; right to browse.
-            </p>
-          </div>
-
-          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <a href="https://www.google.com/maps/place/Varghese+Sabu+Advocate/@9.9901567,76.2764899,17z/data=!3m1!4b1!4m6!3m5!1s0x3b080d9c78eeb907:0x9512fd4c23c9f576!8m2!3d9.9901567!4d76.2764899!16s%2Fg%2F11vzy4rp1y?hl=en-IN" target="_blank" rel="noopener noreferrer" class="btn-gold-solid" style="align-self:center; font-size:12px; padding:7px 12px; display:inline-flex; align-items:center; gap:6px;">
-              <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              <span>43 Reviews</span>
-            </a>
-            <div class="swipe-controls">
-              <button class="swipe-arrow-btn" onclick="SwipeController.prev('reviewsTrack')" title="Swipe Left" aria-label="Swipe Left">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-              </button>
-              <button class="swipe-arrow-btn" onclick="SwipeController.next('reviewsTrack')" title="Swipe Right" aria-label="Swipe Right">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- REVIEWS SWIPE TRACK -->
-        <div class="swipe-rail-wrapper">
-          <div id="reviewsTrack" class="swipe-track">
+    <!-- SECTION: VERIFIED GOOGLE CLIENT REVIEWS (STICKY HORIZONTAL SCROLL PIN) -->
+    <section id="reviews" class="pin-scroll-section" data-pin-track="reviewsTrack">
+      <div class="pin-sticky-box">
+        <div class="site-wrapper pin-content-inner">
+          <div class="craft-card pin-craft-wrapper" style="padding: 24px;">
+            <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
+              <div class="section-header reveal-on-scroll">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="pill-badge gold">Client Endorsements</span>
+                  <span class="pill-badge emerald" style="display:inline-flex; align-items:center; gap:5px;">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>5.0 / 5.0 (43 Google Reviews)</span>
+                  </span>
+                </div>
+                <h2 class="section-title">Verified Client Testimonials &amp; Google Reviews</h2>
+                <p class="section-subtitle">
+                  Authentic feedback from individuals, families, and businesses represented before the High Court of Kerala.
+                </p>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <a href="https://www.google.com/maps/place/Varghese+Sabu+Advocate/@9.9901567,76.2764899,17z/data=!3m1!4b1!4m6!3m5!1s0x3b080d9c78eeb907:0x9512fd4c23c9f576!8m2!3d9.9901567!4d76.2764899!16s%2Fg%2F11vzy4rp1y?hl=en-IN" target="_blank" rel="noopener noreferrer" class="btn-gold-solid" style="align-self:center; font-size:12px; padding:7px 12px; display:inline-flex; align-items:center; gap:6px;">
+                  <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  <span>43 Reviews</span>
+                </a>
+                <div class="swipe-controls">
+                  <button class="swipe-arrow-btn" onclick="SwipeController.prev('reviewsTrack')" title="Swipe Left" aria-label="Swipe Left">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                  </button>
+                  <button class="swipe-arrow-btn" onclick="SwipeController.next('reviewsTrack')" title="Swipe Right" aria-label="Swipe Right">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEWS PIN SWIPE TRACK -->
+            <div class="swipe-rail-wrapper">
+              <div id="reviewsTrack" class="swipe-track pin-horizontal-track">
             
             <!-- Review 1: Rahul K -->
             <div class="swipe-card craft-card spotlight-card">
@@ -608,35 +620,44 @@
           </a>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- SECTION: REPORTED JUDGMENTS (HORIZONTAL SWIPE RAIL) -->
-    <section id="judgments" class="section-spacer">
-      <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
-        <div class="section-header">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="pill-badge gold">High Court Case Record</span>
-            <span class="pill-badge neutral">Reported Judgments &bull; Swipe &harr;</span>
+    <!-- SECTION: REPORTED JUDGMENTS (STICKY HORIZONTAL SCROLL PIN) -->
+    <section id="judgments" class="pin-scroll-section" data-pin-track="judgmentsTrack">
+      <div class="pin-sticky-box">
+        <div class="site-wrapper pin-content-inner">
+          <div class="section-header-row swipe-rail-header" style="margin-bottom: 20px;">
+            <div class="section-header reveal-on-scroll">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="pill-badge gold">High Court Case Record</span>
+                <span class="pill-badge neutral">
+                  <span class="pin-scroll-hint">
+                    Scroll Down to Slide Precedents
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </span>
+                </span>
+              </div>
+              <h2 class="section-title">Landmark Precedents &amp; Decisive Rulings</h2>
+              <p class="section-subtitle">
+                Selected reported decisions and victories across Admiralty, Section 528 BNSS Quashing, Arbitration, and Public Writs.
+              </p>
+            </div>
+
+            <div class="swipe-controls">
+              <button class="swipe-arrow-btn" onclick="SwipeController.prev('judgmentsTrack')" title="Swipe Left" aria-label="Swipe Left">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button class="swipe-arrow-btn" onclick="SwipeController.next('judgmentsTrack')" title="Swipe Right" aria-label="Swipe Right">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
           </div>
-          <h2 class="section-title">Landmark Precedents &amp; Decisive Rulings</h2>
-          <p class="section-subtitle">
-            Selected reported decisions and victories across Admiralty, Section 528 BNSS Quashing, Arbitration, and Public Writs.
-          </p>
-        </div>
 
-        <div class="swipe-controls">
-          <button class="swipe-arrow-btn" onclick="SwipeController.prev('judgmentsTrack')" title="Swipe Left" aria-label="Swipe Left">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="swipe-arrow-btn" onclick="SwipeController.next('judgmentsTrack')" title="Swipe Right" aria-label="Swipe Right">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- JUDGMENTS SWIPE TRACK -->
-      <div class="swipe-rail-wrapper">
-        <div id="judgmentsTrack" class="swipe-track">
+          <!-- JUDGMENTS PIN HORIZONTAL TRACK -->
+          <div class="swipe-rail-wrapper">
+            <div id="judgmentsTrack" class="swipe-track pin-horizontal-track">
 
           <!-- Case 1 -->
           <div class="swipe-card craft-card spotlight-card" onclick="showJudgmentDetail(0)" style="cursor:pointer;">
@@ -730,13 +751,15 @@
         <!-- Pagination Dots Indicator -->
         <div id="judgmentsTrackDots" class="swipe-dots"></div>
       </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION: INDIAN LAW STATUTORY CORPUS & REAL-TIME API SEARCH -->
-    <section id="lawExplorer" class="section-spacer">
+    <section id="lawExplorer" class="section-spacer reveal-on-scroll">
       <div class="craft-card" style="padding: 28px;">
         
-        <div class="section-header-row" style="margin-bottom: 20px;">
+        <div class="section-header-row reveal-on-scroll" style="margin-bottom: 20px;">
           <div class="section-header">
             <div style="display:flex; align-items:center; gap:8px;">
               <span class="pill-badge gold">Indian Law Search Engine</span>
@@ -755,7 +778,7 @@
         </div>
 
         <!-- Live Search Bar -->
-        <div class="search-box-wrap">
+        <div class="search-box-wrap reveal-on-scroll">
           <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           <input 
             type="text" 
@@ -766,7 +789,7 @@
         </div>
 
         <!-- Popular Presets -->
-        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="stagger-children" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
           <span style="font-size:11px; text-transform:uppercase; color:var(--text-dim); font-weight:700; margin-right:4px;">Quick Presets:</span>
           <button data-law-preset="bail" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Bail (482/483)</button>
           <button data-law-preset="quashing" class="filter-tab-btn" style="padding:4px 10px; font-size:11px;">Quashing (528 BNSS)</button>
@@ -791,11 +814,11 @@
     </section>
 
     <!-- SECTION: CHAMBER CONSULTATION -->
-    <section id="consultationSection" class="section-spacer">
+    <section id="consultationSection" class="section-spacer reveal-on-scroll">
       <div class="craft-card" style="padding: 28px;">
         <div class="two-col-grid">
           
-          <div>
+          <div class="reveal-on-scroll">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
               <span class="pill-badge gold">Direct Chamber Access</span>
               <span class="pill-badge emerald">In-Person & Virtual</span>
@@ -831,7 +854,7 @@
           </div>
 
           <!-- Booking Form -->
-          <div>
+          <div class="reveal-on-scroll">
             <form id="consultationForm" class="nested-box" style="padding: 24px; display:flex; flex-direction:column; gap:14px;">
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                 <div>
@@ -905,9 +928,9 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
+  <footer class="site-footer reveal-on-scroll">
     <div class="site-wrapper">
-      <div class="footer-grid">
+      <div class="footer-grid stagger-children">
         
         <!-- Brand & Enrollment -->
         <div class="footer-col">

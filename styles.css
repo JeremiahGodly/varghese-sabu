@@ -554,6 +554,108 @@ body {
 }
 
 /* ==========================================================================
+   STICKY SCROLL-DRIVEN HORIZONTAL PIN SYSTEM ("PIN & SCROLL RIGHT")
+   ========================================================================== */
+.pin-scroll-section {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pin-sticky-box {
+  position: sticky;
+  top: 68px;
+  width: 100%;
+  height: calc(100vh - 68px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .pin-sticky-box {
+    top: 56px;
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    padding-bottom: 56px;
+  }
+}
+
+.pin-content-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pin-craft-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pin-horizontal-track {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  gap: 16px;
+  overflow: visible !important;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1);
+  padding: 8px 4px 14px 4px;
+}
+
+@media (max-width: 768px) {
+  .pin-horizontal-track {
+    gap: 12px;
+  }
+}
+
+.pin-card-focused {
+  border-color: var(--gold) !important;
+  box-shadow: 0 16px 40px -10px var(--gold-glow), 0 0 0 1px var(--gold) !important;
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* ==========================================================================
+   STAGGERED SCROLL REVEAL ANIMATIONS ("ELEMENTS LOAD ONE BY ONE")
+   ========================================================================== */
+.js-ready .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.js-ready .reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-ready .stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.js-ready .stagger-children.is-revealed > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.04s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.10s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.16s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.22s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.28s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.34s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(7) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
+.js-ready .stagger-children.is-revealed > *:nth-child(8) { opacity: 1; transform: translateY(0); transition-delay: 0.46s; }
+
+/* ==========================================================================
    HORIZONTAL SWIPE MOTION CAROUSEL SYSTEM
    ========================================================================== */
 .swipe-rail-wrapper {

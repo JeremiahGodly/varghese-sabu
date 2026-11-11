@@ -479,99 +479,283 @@ function showJudgmentDetail(index) {
   DrawerController.open(item.caseNo, item.court, 'Reported Judgment', 'badge-emerald', html);
 }
 
-// HORIZONTAL MOTION GRAPHICS SWIPE CONTROLLER
-const SwipeController = {
-  tracks: ['artifactsTrack', 'reviewsTrack', 'judgmentsTrack'],
+// ==========================================================================
+// SCROLL REVEAL ENGINE (STAGGERED VIEWPORT REVEALS - ONE BY ONE LOADING)
+// ==========================================================================
+const ScrollRevealEngine = {
+  observer: null,
 
   init() {
-    this.tracks.forEach(trackId => {
-      const track = document.getElementById(trackId);
-      const dotsContainer = document.getElementById(`${trackId}Dots`);
-      if (!track || !dotsContainer) return;
+    const targets = document.querySelectorAll('.reveal-on-scroll, .stagger-children');
+    
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-revealed'));
+      return;
+    }
 
-      const cards = track.querySelectorAll('.swipe-card');
-      const cardCount = cards.length;
+    this.observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.05
+    });
+
+    targets.forEach(el => this.observer.observe(el));
+  },
+
+  observeNew(container) {
+    if (!this.observer || !container) return;
+    const elements = container.querySelectorAll('.reveal-on-scroll, .stagger-children');
+    elements.forEach(el => this.observer.observe(el));
+  }
+};
+
+// ==========================================================================
+// PIN SCROLL ENGINE (STICKY HORIZONTAL SCROLL PINNING)
+// Vertical scrolling stops, slides track horizontally, resumes downwards
+// ==========================================================================
+const PinScrollEngine = {
+  sections: [],
+  isTicking: false,
+
+  init() {
+    this.setupSections();
+    this.recalculate();
+
+    window.addEventListener('scroll', () => {
+      if (!this.isTicking) {
+        window.requestAnimationFrame(() => {
+          this.onScroll();
+          this.isTicking = false;
+        });
+        this.isTicking = true;
+      }
+    }, { passive: true });
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        this.recalculate();
+        this.onScroll();
+      }, 100);
+    });
+
+    window.addEventListener('load', () => {
+      this.recalculate();
+      this.onScroll();
+    });
+
+    this.bindTouchSwipes();
+  },
+
+  setupSections() {
+    const sectionEls = document.querySelectorAll('.pin-scroll-section');
+    this.sections = [];
+
+    sectionEls.forEach(section => {
+      const trackId = section.getAttribute('data-pin-track');
+      const track = document.getElementById(trackId);
+      if (!track) return;
+
+      const dotsContainer = document.getElementById(`${trackId}Dots`);
+      const cards = Array.from(track.querySelectorAll('.swipe-card'));
 
       // Render dots
-      dotsContainer.innerHTML = '';
-      for (let i = 0; i < cardCount; i++) {
-        const dot = document.createElement('button');
-        dot.className = `swipe-dot ${i === 0 ? 'active' : ''}`;
-        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-        dot.addEventListener('click', () => {
-          AudioFX.playClick(650, 0.02);
-          this.goTo(trackId, i);
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        cards.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = `swipe-dot ${i === 0 ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          dot.addEventListener('click', () => {
+            AudioFX.playClick(650, 0.02);
+            this.goTo(trackId, i);
+          });
+          dotsContainer.appendChild(dot);
         });
-        dotsContainer.appendChild(dot);
       }
 
-      // Track scroll event to update dots
-      let scrollTimer = null;
-      track.addEventListener('scroll', () => {
-        if (scrollTimer) clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-          this.updateActiveDot(trackId);
-        }, 60);
-      }, { passive: true });
+      this.sections.push({
+        id: trackId,
+        sectionEl: section,
+        trackEl: track,
+        cards: cards,
+        dotsContainer: dotsContainer,
+        dots: dotsContainer ? Array.from(dotsContainer.querySelectorAll('.swipe-dot')) : [],
+        maxTranslate: 0,
+        scrollDistance: 0,
+        currentIndex: 0
+      });
+    });
+  },
+
+  recalculate() {
+    const isMobile = window.innerWidth <= 768;
+    const viewportHeight = window.innerHeight;
+    const speedFactor = isMobile ? 1.15 : 1.25;
+
+    this.sections.forEach(item => {
+      const track = item.trackEl;
+      const parent = track.parentElement;
+      const parentWidth = parent ? parent.clientWidth : window.innerWidth;
+      
+      const trackScrollWidth = track.scrollWidth;
+      const maxTranslate = Math.max(0, trackScrollWidth - parentWidth + 32);
+      item.maxTranslate = maxTranslate;
+
+      if (maxTranslate > 0) {
+        const scrollDistance = Math.round(maxTranslate * speedFactor);
+        item.scrollDistance = scrollDistance;
+        item.sectionEl.style.height = `${viewportHeight + scrollDistance}px`;
+      } else {
+        item.scrollDistance = 0;
+        item.sectionEl.style.height = 'auto';
+      }
+    });
+  },
+
+  onScroll() {
+    const isMobile = window.innerWidth <= 768;
+    const stickyTop = isMobile ? 56 : 68;
+
+    this.sections.forEach(item => {
+      if (item.maxTranslate <= 0 || item.scrollDistance <= 0) return;
+
+      const rect = item.sectionEl.getBoundingClientRect();
+      const topOffset = rect.top - stickyTop;
+
+      let progress = 0;
+      if (topOffset > 0) {
+        // Not reached pin yet
+        progress = 0;
+      } else if (Math.abs(topOffset) >= item.scrollDistance) {
+        // Pin finished, section moving off-screen
+        progress = 1;
+      } else {
+        // Active pin state
+        progress = Math.abs(topOffset) / item.scrollDistance;
+      }
+
+      progress = Math.max(0, Math.min(1, progress));
+      const translateX = -progress * item.maxTranslate;
+      item.trackEl.style.transform = `translate3d(${translateX.toFixed(2)}px, 0, 0)`;
+
+      const cardCount = item.cards.length;
+      if (cardCount > 0) {
+        const activeIdx = Math.min(cardCount - 1, Math.max(0, Math.round(progress * (cardCount - 1))));
+        if (activeIdx !== item.currentIndex) {
+          item.currentIndex = activeIdx;
+          if (item.dots.length) {
+            item.dots.forEach((dot, idx) => {
+              dot.classList.toggle('active', idx === activeIdx);
+            });
+          }
+          item.cards.forEach((card, idx) => {
+            card.classList.toggle('pin-card-focused', idx === activeIdx);
+          });
+        }
+      }
+    });
+  },
+
+  goTo(trackId, index) {
+    const item = this.sections.find(s => s.id === trackId);
+    if (!item) return;
+
+    const cardCount = item.cards.length;
+    if (cardCount <= 1 || item.scrollDistance <= 0) return;
+
+    const targetProgress = Math.max(0, Math.min(1, index / (cardCount - 1)));
+    const isMobile = window.innerWidth <= 768;
+    const stickyTop = isMobile ? 56 : 68;
+
+    const sectionTop = item.sectionEl.getBoundingClientRect().top + window.scrollY;
+    const targetScrollY = sectionTop - stickyTop + (targetProgress * item.scrollDistance);
+
+    window.scrollTo({
+      top: Math.round(targetScrollY),
+      behavior: 'smooth'
     });
   },
 
   next(trackId) {
     AudioFX.playClick(750, 0.03);
-    const track = document.getElementById(trackId);
-    if (!track) return;
-    const card = track.querySelector('.swipe-card');
-    const scrollAmount = card ? (card.offsetWidth + 14) : 320;
-    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    const item = this.sections.find(s => s.id === trackId);
+    if (!item) return;
+    const nextIdx = Math.min(item.cards.length - 1, item.currentIndex + 1);
+    this.goTo(trackId, nextIdx);
   },
 
   prev(trackId) {
     AudioFX.playClick(650, 0.03);
-    const track = document.getElementById(trackId);
-    if (!track) return;
-    const card = track.querySelector('.swipe-card');
-    const scrollAmount = card ? (card.offsetWidth + 14) : 320;
-    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    const item = this.sections.find(s => s.id === trackId);
+    if (!item) return;
+    const prevIdx = Math.max(0, item.currentIndex - 1);
+    this.goTo(trackId, prevIdx);
+  },
+
+  bindTouchSwipes() {
+    this.sections.forEach(item => {
+      let startX = 0;
+      let startY = 0;
+      let isDragging = false;
+
+      const track = item.trackEl;
+
+      track.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+      }, { passive: true });
+
+      track.addEventListener('touchmove', (e) => {
+        if (!isDragging || !e.touches || e.touches.length !== 1) return;
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const diffX = startX - currentX;
+        const diffY = startY - currentY;
+
+        // Convert horizontal finger swipe to page scroll
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 8) {
+          window.scrollBy({ top: diffX * 1.15, behavior: 'auto' });
+          startX = currentX;
+          startY = currentY;
+        }
+      }, { passive: true });
+
+      track.addEventListener('touchend', () => {
+        isDragging = false;
+      }, { passive: true });
+    });
+  }
+};
+
+// MOTION GRAPHICS SWIPE CONTROLLER (API BRIDGE)
+const SwipeController = {
+  tracks: ['artifactsTrack', 'reviewsTrack', 'judgmentsTrack'],
+
+  init() {
+    PinScrollEngine.init();
+  },
+
+  next(trackId) {
+    PinScrollEngine.next(trackId);
+  },
+
+  prev(trackId) {
+    PinScrollEngine.prev(trackId);
   },
 
   goTo(trackId, index) {
-    const track = document.getElementById(trackId);
-    if (!track) return;
-    const cards = track.querySelectorAll('.swipe-card');
-    if (cards[index]) {
-      cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-    }
-  },
-
-  updateActiveDot(trackId) {
-    const track = document.getElementById(trackId);
-    const dotsContainer = document.getElementById(`${trackId}Dots`);
-    if (!track || !dotsContainer) return;
-
-    const cards = track.querySelectorAll('.swipe-card');
-    const dots = dotsContainer.querySelectorAll('.swipe-dot');
-    if (!cards.length || !dots.length) return;
-
-    const trackLeft = track.getBoundingClientRect().left;
-    let closestIndex = 0;
-    let minDistance = Infinity;
-
-    cards.forEach((card, i) => {
-      const cardLeft = card.getBoundingClientRect().left;
-      const dist = Math.abs(cardLeft - trackLeft);
-      if (dist < minDistance) {
-        minDistance = dist;
-        closestIndex = i;
-      }
-    });
-
-    dots.forEach((dot, i) => {
-      if (i === closestIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
+    PinScrollEngine.goTo(trackId, index);
   }
 };
 
@@ -807,6 +991,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ThemeController.init();
   PatternSwitcher.init();
   AmbientFluidCanvas.init();
+  ScrollRevealEngine.init();
   LawSearchEngine.init();
   SwipeController.init();
   initSpotlight();
@@ -828,5 +1013,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const consultForm = document.getElementById('consultationForm');
   if (consultForm) {
     consultForm.addEventListener('submit', handleConsultationSubmit);
+  }
+
+  // URL scroll position support (?scrollY=1200)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('scrollY')) {
+    const targetY = parseInt(urlParams.get('scrollY'), 10);
+    window.scrollTo(0, targetY);
+    PinScrollEngine.onScroll();
   }
 });
